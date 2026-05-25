@@ -1,0 +1,52 @@
+{
+    "ignore_before_first_h2": true,
+    "output_body_only": true,
+    "stop_processing_after": [
+        "Nearby Stores Widget"
+    ],
+    "widgets": [
+        {
+            "id": "quick_quote",
+            "match": [
+                "Quick Quote Widget",
+                "Quote Widget"
+            ],
+            "output": "[widget_quick_quote]",
+            "max_occurrences": 1
+        },
+        {
+            "id": "type_of_coverage",
+            "match": [
+                "Type of Coverage widget"
+            ],
+            "output": "[widget_type_of_coverage]",
+            "max_occurrences": 1
+        },
+        {
+            "id": "get_call_us",
+            "match": [
+                "Quote Box Widget with Icons"
+            ],
+            "output": "[widget_get_call_us]",
+            "max_occurrences": 1
+        }
+
+    ],
+    "special_buttons": [
+        {
+            "match": [ 
+                "quote online",
+                "start a quote online"
+            ],
+            "render_as": "modal_button"
+        }
+    ],
+
+    "link_replacements": [
+    {
+      "from": "https://www.freeway.com/",
+      "to": "https://freeway.confiedevstg.com/"
+    }
+  ]
+}
+
