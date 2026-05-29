@@ -17,7 +17,7 @@
         {
             "id": "type_of_coverage",
             "match": [
-                "Type of Coverage widget"
+                "Types of Coverage widget"
             ],
             "output": "[widget_type_of_coverage]",
             "max_occurrences": 1

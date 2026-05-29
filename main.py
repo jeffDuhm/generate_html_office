@@ -13,6 +13,6 @@ blocks = read_word_document(doc, rules)
 
 normalized_blocks = normalize_blocks(blocks)
 
-html_strings = renderer_html(normalized_blocks)
+html_strings = renderer_html(normalized_blocks, rules)
 
 print(html_strings)

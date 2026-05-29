@@ -1,5 +1,4 @@
-
-def renderer_html(blocks):
+def renderer_html(blocks, rules):
     
     html = ""
     
@@ -19,6 +18,13 @@ def renderer_html(blocks):
                 list_items += f"<li>{item}</li>"
                 
             html += f"<ul>{list_items}</ul>"
+        
+        elif block["type"] == "widget":
+            
+            for widget in rules["widgets"]:
+                
+                if widget["id"] == block["widget_id"]:
+                    
+                    html += f'<p>{widget["output"]}</p>'
             
     return html
-            
