@@ -1,4 +1,16 @@
-def is_widget(text,rules):
+def extract_content(paragraph):
+    content = []
+        
+    for run in paragraph.runs:
+        
+        content.append({
+            "text": run.text,
+            "bold": bool(run.bold)
+        })
+    
+    return content
+
+def find_widget(text,rules):
     
     for widget in rules["widgets"]:
         
@@ -12,9 +24,9 @@ def read_word_document(doc, rules):
     
     for paragraph in doc.paragraphs:
     
-        style = paragraph.style.name 
+        style = paragraph.style.name
         text = paragraph.text
-        
+                
         if not text.strip():
             continue
         
@@ -33,14 +45,17 @@ def read_word_document(doc, rules):
             })
             
         elif style == "List Paragraph":
+            
+            content = extract_content(paragraph)
+            
             blocks.append({
                 "type": "list_item",
-                "text": text
+                "content": content
             })
             
         elif style == "Normal":
             
-            widget = is_widget(text, rules)
+            widget = find_widget(text, rules)
             
             if widget:
                 blocks.append({
@@ -50,9 +65,11 @@ def read_word_document(doc, rules):
             
             else:
                 
+                content = extract_content(paragraph)
+        
                 blocks.append({
-                    "type": "paragraph",
-                    "text": text
-                })
-    
+                        "type": "paragraph",
+                        "content": content
+                    })
+                
     return blocks

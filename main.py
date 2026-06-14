@@ -11,8 +11,8 @@ with open("config/rules.json", "r") as file:
     
 blocks = read_word_document(doc, rules)
 
-normalized_blocks = normalize_blocks(blocks)
+#normalized_blocks = normalize_blocks(blocks)
 
-html_strings = renderer_html(normalized_blocks, rules)
+#html_strings = renderer_html(normalized_blocks, rules)
 
-print(html_strings)
+print(blocks)
