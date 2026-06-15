@@ -1,4 +1,3 @@
-
 # Normaliza estructura de datos por tipos
 def normalize_blocks(blocks):
     
@@ -10,7 +9,7 @@ def normalize_blocks(blocks):
 
         if block["type"] == "list_item":
             
-            current_list_items.append(block["text"])
+            current_list_items.append(block["content"])
             
         else:
             

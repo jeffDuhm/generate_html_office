@@ -1,3 +1,17 @@
+def render_content(content):
+
+    html_content = ""
+    
+    for piece in content:
+        
+        if not piece["bold"]:
+            
+            html_content += piece["text"]
+        else:
+            html_content += f'<strong>{piece["text"]}</strong>'
+            
+    return html_content
+
 def renderer_html(blocks, rules):
     
     html = ""
@@ -15,14 +29,20 @@ def renderer_html(blocks, rules):
             html += f'<h{block["level"]}>{block["text"]}</h{block["level"]}>'
         
         elif block["type"] == "paragraph":
-            html += f'<p>{block["text"]}</p>'
+            
+            paragraph_content = render_content(block["content"])
+            
+            html += f'<p>{paragraph_content}</p>'
         
         elif block["type"] == "list":
             
             list_items = ""
             
             for item in block["items"]:
-                list_items += f"<li>{item}</li>"
+                
+                item_content = render_content(item)
+
+                list_items += f"<li>{item_content}</li>"
                 
             html += f"<ul>{list_items}</ul>" 
         
