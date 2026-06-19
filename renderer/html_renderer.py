@@ -4,11 +4,17 @@ def render_content(content):
     
     for piece in content:
         
-        if not piece["bold"]:
+        if piece["link"]:
+            
+            html_content += f'<a href="{piece["link"]}">{piece["text"]}</a>'
+        
+        elif piece["bold"]:
+            
+            html_content += f'<strong>{piece["text"]}</strong>'
+            
+        else:
             
             html_content += piece["text"]
-        else:
-            html_content += f'<strong>{piece["text"]}</strong>'
             
     return html_content
 

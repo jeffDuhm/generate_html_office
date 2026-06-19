@@ -1,12 +1,26 @@
+from docx.text.run import Run
+from docx.text.hyperlink import Hyperlink
+
 def extract_content(paragraph):
     content = []
+    
+    for item in paragraph.iter_inner_content():
         
-    for run in paragraph.runs:
-        
-        content.append({
-            "text": run.text,
-            "bold": bool(run.bold)
-        })
+        if isinstance(item, Run):
+    
+            content.append({
+                "text": item.text,
+                "bold": bool(item.bold),
+                "link": False
+            })
+            
+        elif isinstance(item, Hyperlink):
+            
+            content.append({
+                "text": item.text,
+                "bold": False,
+                "link": item.address
+            })
     
     return content
 
