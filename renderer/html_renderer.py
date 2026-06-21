@@ -1,4 +1,19 @@
-def render_content(content):
+def transform_link(url, rules):
+    
+    for replacement in rules["link_replacements"]:
+        
+        if url.startswith(replacement["from"]):
+            
+            url = url.replace(
+                replacement["from"], 
+                replacement["to"]
+            )
+            
+            break
+            
+    return url
+
+def render_content(content, rules):
 
     html_content = ""
     
@@ -6,7 +21,9 @@ def render_content(content):
         
         if piece["link"]:
             
-            html_content += f'<a href="{piece["link"]}">{piece["text"]}</a>'
+            new_url = transform_link(piece["link"], rules)
+            
+            html_content += f'<a href="{new_url}" target="_blank">{piece["text"]}</a>'
         
         elif piece["bold"]:
             
@@ -36,7 +53,7 @@ def renderer_html(blocks, rules):
         
         elif block["type"] == "paragraph":
             
-            paragraph_content = render_content(block["content"])
+            paragraph_content = render_content(block["content"], rules)
             
             html += f'<p>{paragraph_content}</p>'
         
@@ -46,7 +63,7 @@ def renderer_html(blocks, rules):
             
             for item in block["items"]:
                 
-                item_content = render_content(item)
+                item_content = render_content(item, rules)
 
                 list_items += f"<li>{item_content}</li>"
                 
