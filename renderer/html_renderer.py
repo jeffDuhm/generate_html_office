@@ -1,3 +1,13 @@
+def find_special_button(text, rules):
+    
+    for button in rules["special_buttons"]:
+        
+        if text.lower().strip() in button["match"]:
+            
+            return button
+        
+    return None
+
 def is_phone_link(url):
     
     return url.startswith("tel:")
@@ -25,13 +35,23 @@ def render_content(content, rules):
         
         if piece["link"]:
             
-            new_url = transform_link(piece["link"], rules)
+            button = find_special_button(piece["text"], rules)
             
-            if is_phone_link(piece["link"]):
+            if button:
+    
+                html_content += (
+                    f'<button class="js-hero-home-more-button">'
+                    f'{piece["text"]}'
+                    f'</button>'
+                )
+            
+            elif is_phone_link(piece["link"]):
                 
                 html_content += f'<a href="{piece["link"]}">{piece["text"]}</a>'
                 
             else:
+                
+                new_url = transform_link(piece["link"], rules)
             
                 html_content += f'<a href="{new_url}" target="_blank">{piece["text"]}</a>'
         
