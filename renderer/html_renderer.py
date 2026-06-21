@@ -1,3 +1,7 @@
+def is_phone_link(url):
+    
+    return url.startswith("tel:")
+
 def transform_link(url, rules):
     
     for replacement in rules["link_replacements"]:
@@ -23,7 +27,13 @@ def render_content(content, rules):
             
             new_url = transform_link(piece["link"], rules)
             
-            html_content += f'<a href="{new_url}" target="_blank">{piece["text"]}</a>'
+            if is_phone_link(piece["link"]):
+                
+                html_content += f'<a href="{piece["link"]}">{piece["text"]}</a>'
+                
+            else:
+            
+                html_content += f'<a href="{new_url}" target="_blank">{piece["text"]}</a>'
         
         elif piece["bold"]:
             
