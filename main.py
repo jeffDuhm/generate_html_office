@@ -4,9 +4,9 @@ from parser.word_reader import read_word_document
 from renderer.html_renderer import renderer_html
 from normalizers.blocks_normalizer import normalize_blocks
 
-doc = Document("./input/test_office.docx")
+doc = Document("./input/freeway_en.docx")
 
-with open("config/rules.json", "r", encoding="utf-8") as file:
+with open("config/freeway.json", "r", encoding="utf-8") as file:
     rules = json.load(file)
     
 blocks = read_word_document(doc, rules)

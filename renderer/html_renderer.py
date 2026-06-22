@@ -73,16 +73,23 @@ def renderer_html(blocks, rules):
     
     html = ""
     open_section = False
+    use_sections = rules["use_sections"]
     
     for block in blocks:
         
-        if block["type"] in ["heading", "paragraph", "list"]:
+        if (
+            use_sections
+            and block["type"] in ["heading", "paragraph", "list"]
+        ):
 
-            if not open_section:
-                html += "<p>[open-section]</p>"
-                open_section = True
+                if not open_section:
+                    
+                    html += "<p>[open-section]</p>"
+                    
+                    open_section = True
 
         if block["type"] == "heading":
+            
             html += f'<h{block["level"]}>{block["text"]}</h{block["level"]}>'
         
         elif block["type"] == "paragraph":
@@ -105,15 +112,22 @@ def renderer_html(blocks, rules):
         
         elif block["type"] == "widget":
             
-            if open_section:
+            if use_sections and open_section:
+                
                 html+=f'<p>[close-section]</p>'
+                
                 open_section = False
             
             for widget in rules["widgets"]:
+                
                 if widget["id"] == block["widget_id"]:
+                    
                     html += f'<p>{widget["output"]}</p>'
+                    
                     break
-    if open_section:
+                
+    if use_sections and open_section:
+        
         html += f'<p>[close-section]</p>'
             
     return html

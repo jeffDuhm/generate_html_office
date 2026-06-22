@@ -1,9 +1,6 @@
 {
-    "ignore_before_first_h2": true,
-    "output_body_only": true,
-    "stop_processing_after": [
-        "Nearby Stores Widget"
-    ],
+    "site": "ino",
+    "use_sections": true,
     "widgets": [
         {
             "id": "quick_quote",
@@ -11,9 +8,10 @@
                 "Quick Quote Widget",
                 "Quote Widget",
                 "<Quote Widget>",
+                "<Quick Quote Widget>",
                 "[Quote widget]"
             ],
-            "output": "[widget_quick_quote]",
+            "output": "[widget_start_quote]",
             "max_occurrences": 1
         },
         {
@@ -22,7 +20,7 @@
                 "Types of Coverage widget",
                 "<Types of Coverage Widget>"
             ],
-            "output": "[widget_type_of_coverage]",
+            "output": "[widget_quick_quote]",
             "max_occurrences": 1
         },
         {
@@ -31,31 +29,16 @@
                 "Quote Box Widget with Icons",
                 "<Quote Box Widget with Icons>"
             ],
-            "output": "[widget_get_call_us]",
+            "output": "[widget_knowledge]",
             "max_occurrences": 1
         }
 
     ],
-    "special_buttons": [
-        {
-            "match": [ 
-                "quote online",
-                "start a quote online",
-                "free quote online",
-                "en línea"
-            ],
-            "render_as": "modal_button"
-        }
-    ],
-
+    "special_buttons": [],
     "link_replacements": [
     {
-      "from": "https://www.freeway.com/",
-      "to": "https://freeway.confiedevstg.com/"
-    },
-    {
-        "from": "https://www.freewayseguros.com/",
-        "to": "https://freeway-es.confiedev.net/"
+      "from": "https://www.insureone.com/",
+      "to": "https://insureone.confiedevstg.com/"
     }
   ]
 }

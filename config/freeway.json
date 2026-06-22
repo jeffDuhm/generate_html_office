@@ -1,0 +1,59 @@
+{
+    "site": "freeway",
+    "use_sections": true,
+    "widgets": [
+        {
+            "id": "quick_quote",
+            "match": [
+                "Quick Quote Widget",
+                "Quote Widget",
+                "<Quote Widget>",
+                "[Quote widget]"
+            ],
+            "output": "[widget_quick_quote]",
+            "max_occurrences": 1
+        },
+        {
+            "id": "type_of_coverage",
+            "match": [
+                "Types of Coverage widget",
+                "<Types of Coverage Widget>"
+            ],
+            "output": "[widget_type_of_coverage]",
+            "max_occurrences": 1
+        },
+        {
+            "id": "get_call_us",
+            "match": [
+                "Quote Box Widget with Icons",
+                "<Quote Box Widget with Icons>"
+            ],
+            "output": "[widget_get_call_us]",
+            "max_occurrences": 1
+        }
+
+    ],
+    "special_buttons": [
+        {
+            "match": [ 
+                "quote online",
+                "start a quote online",
+                "free quote online",
+                "en línea"
+            ],
+            "render_as": "modal_button"
+        }
+    ],
+
+    "link_replacements": [
+    {
+      "from": "https://www.freeway.com/",
+      "to": "https://freeway.confiedevstg.com/"
+    },
+    {
+        "from": "https://www.freewayseguros.com/",
+        "to": "https://freeway-es.confiedev.net/"
+    }
+  ]
+}
+
