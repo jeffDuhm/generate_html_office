@@ -1,10 +1,14 @@
 def find_special_button(text, rules):
     
+    text = text.lower().strip()
+    
     for button in rules["special_buttons"]:
         
-        if text.lower().strip() in button["match"]:
+        for match in button["match"]:
+
+            if text == match.lower().strip():
             
-            return button
+                return button
         
     return None
 

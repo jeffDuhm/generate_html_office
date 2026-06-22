@@ -6,7 +6,7 @@ from normalizers.blocks_normalizer import normalize_blocks
 
 doc = Document("./input/test_office.docx")
 
-with open("config/rules.json", "r") as file:
+with open("config/rules.json", "r", encoding="utf-8") as file:
     rules = json.load(file)
     
 blocks = read_word_document(doc, rules)

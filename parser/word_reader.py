@@ -26,10 +26,16 @@ def extract_content(paragraph):
 
 def find_widget(text,rules):
     
+    text = text.lower().strip()
+    
     for widget in rules["widgets"]:
         
-        if text in widget["match"]:
-            return widget
+        for match in widget["match"]:
+        
+            if text == match.lower().strip():
+                
+                return widget
+            
     return None
 
 def read_word_document(doc, rules):
