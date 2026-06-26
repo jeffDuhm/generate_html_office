@@ -38,6 +38,49 @@ def find_widget(text,rules):
             
     return None
 
+def parse_heading(paragraph):
+    
+    style = paragraph.style.name
+    
+    # Obtiene el numero de nivel (ej: "Heading 2" -> 2)
+    level = int(style.split()[-1])
+    
+    return {
+        "type": "heading",
+        "level": level,
+        "text": paragraph.text
+    }
+    
+def parse_list_item(paragraph):
+    
+    content = extract_content(paragraph)
+    
+    return {
+        "type": "list_item",
+        "content": content
+    }
+
+def parse_widget(paragraph, rules):
+    
+    widget = find_widget(paragraph.text, rules)
+    
+    if not widget:
+        return None
+    
+    return {
+        "type": "widget",
+        "widget_id": widget["id"],
+    }
+
+def parse_paragraph(paragraph):
+    
+    content = extract_content(paragraph)
+    
+    return {
+        "type": "paragraph",
+        "content": content
+    }
+    
 def read_word_document(doc, rules):
     
     blocks = []
@@ -45,51 +88,28 @@ def read_word_document(doc, rules):
     for paragraph in doc.paragraphs:
     
         style = paragraph.style.name
-        text = paragraph.text
                 
-        if not text.strip():
+        if not paragraph.text.strip():
             continue
         
-        if style == "Heading 2":
-            blocks.append({
-                "type": "heading",
-                "level": 2,
-                "text": text
-            })
+        if style.startswith("Heading"):
             
-        elif style == "Heading 3":
-            blocks.append({
-                "type": "heading",
-                "level": 3,
-                "text": text
-            })
+            blocks.append(parse_heading(paragraph))
             
         elif style == "List Paragraph":
             
-            content = extract_content(paragraph)
-            
-            blocks.append({
-                "type": "list_item",
-                "content": content
-            })
+            blocks.append(parse_list_item(paragraph))
             
         elif style == "Normal":
             
-            widget = find_widget(text, rules)
+            widget = parse_widget(paragraph, rules)
             
             if widget:
-                blocks.append({
-                    "type": "widget",
-                    "widget_id": widget["id"],
-                })
+                
+                blocks.append(widget)
             
             else:
-                
-                content = extract_content(paragraph)
         
-                blocks.append({
-                        "type": "paragraph",
-                        "content": content
-                    })
-                
+                blocks.append(parse_paragraph(paragraph))
+
     return blocks
