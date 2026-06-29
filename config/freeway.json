@@ -8,7 +8,8 @@
                 "Quick Quote Widget",
                 "Quote Widget",
                 "<Quote Widget>",
-                "[Quote widget]"
+                "[Quote widget]",
+                "[widget_quick_quote]"
             ],
             "output": "[widget_quick_quote]",
             "max_occurrences": 1
@@ -17,7 +18,8 @@
             "id": "type_of_coverage",
             "match": [
                 "Types of Coverage widget",
-                "<Types of Coverage Widget>"
+                "<Types of Coverage Widget>",
+                "[widget_type_of_coverage]"
             ],
             "output": "[widget_type_of_coverage]",
             "max_occurrences": 1
@@ -26,7 +28,8 @@
             "id": "get_call_us",
             "match": [
                 "Quote Box Widget with Icons",
-                "<Quote Box Widget with Icons>"
+                "<Quote Box Widget with Icons>",
+                "[widget_get_call_us]"
             ],
             "output": "[widget_get_call_us]",
             "max_occurrences": 1
@@ -39,7 +42,8 @@
                 "quote online",
                 "start a quote online",
                 "free quote online",
-                "en línea"
+                "en línea",
+                "application online today"
             ],
             "render_as": "modal_button"
         }
