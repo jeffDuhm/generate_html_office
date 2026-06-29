@@ -85,6 +85,33 @@ def parse_paragraph(paragraph):
         "content": content
     }
     
+def parse_table(table):
+    
+    table_rows = []
+    
+    for row in table.rows:
+
+        rows_cells = []
+        
+        for cell in row.cells:
+            
+            cell_paragraphs = []
+            
+            for paragraph in cell.paragraphs:
+                
+                paragraph_content = extract_content(paragraph)
+                
+                cell_paragraphs.append(paragraph_content)
+
+            rows_cells.append(cell_paragraphs)
+                
+        table_rows.append(rows_cells)
+        
+    return {
+        "type": "table",
+        "rows": table_rows
+    }
+    
 def iter_document_blocks(doc):
     
     for element in doc.element.body:
@@ -130,5 +157,8 @@ def read_word_document(doc, rules):
                 else:
             
                     blocks.append(parse_paragraph(block))
+                    
+        elif isinstance(block, Table):
+            blocks.append(parse_table(block))
         
     return blocks
