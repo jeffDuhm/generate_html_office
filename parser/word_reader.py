@@ -1,5 +1,9 @@
 from docx.text.run import Run
 from docx.text.hyperlink import Hyperlink
+from docx.text.paragraph import Paragraph
+from docx.table import Table
+from docx.oxml.text.paragraph import CT_P
+from docx.oxml.table import CT_Tbl
 
 def extract_content(paragraph):
     content = []
@@ -81,35 +85,50 @@ def parse_paragraph(paragraph):
         "content": content
     }
     
+def iter_document_blocks(doc):
+    
+    for element in doc.element.body:
+
+        if isinstance(element, CT_P):
+
+            yield Paragraph(element, doc)
+
+        elif isinstance(element, CT_Tbl):
+
+            yield Table(element, doc)
+    
 def read_word_document(doc, rules):
     
     blocks = []
     
-    for paragraph in doc.paragraphs:
-    
-        style = paragraph.style.name
-                
-        if not paragraph.text.strip():
-            continue
+    for block in iter_document_blocks(doc):
         
-        if style.startswith("Heading"):
+        if isinstance(block, Paragraph):
             
-            blocks.append(parse_heading(paragraph))
-            
-        elif style == "List Paragraph":
-            
-            blocks.append(parse_list_item(paragraph))
-            
-        elif style == "Normal":
-            
-            widget = parse_widget(paragraph, rules)
-            
-            if widget:
-                
-                blocks.append(widget)
-            
-            else:
         
-                blocks.append(parse_paragraph(paragraph))
-
+            style = block.style.name
+                    
+            if not block.text.strip():
+                continue
+            
+            if style.startswith("Heading"):
+                
+                blocks.append(parse_heading(block))
+                
+            elif style == "List Paragraph":
+                
+                blocks.append(parse_list_item(block))
+                
+            elif style == "Normal":
+                
+                widget = parse_widget(block, rules)
+                
+                if widget:
+                    
+                    blocks.append(widget)
+                
+                else:
+            
+                    blocks.append(parse_paragraph(block))
+        
     return blocks
