@@ -110,6 +110,32 @@ def renderer_html(blocks, rules):
                 
             html += f"<ul>{list_items}</ul>" 
         
+        elif block["type"] == "table":
+            
+            rows_html = ""
+            
+            for row_index, row in enumerate(block["rows"]):
+                
+                cells_html = ""
+                
+                cell_tag = "th" if row_index == 0 else "td"
+                
+                for cell in row:
+                    
+                    paragraphs_html = ""
+                    
+                    for paragraph in cell:
+                        
+                        paragraph_content = render_content(paragraph, rules)
+                        
+                        paragraphs_html += f"<p>{paragraph_content}</p>"
+                    
+                    cells_html += f"<{cell_tag}>{paragraphs_html}</{cell_tag}>"
+
+                rows_html += f"<tr>{cells_html}</tr>"
+                
+            html += f"<table><tbody>{rows_html}</tbody></table>"
+            
         elif block["type"] == "widget":
             
             if use_sections and open_section:
