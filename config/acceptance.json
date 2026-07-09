@@ -9,7 +9,8 @@
                 "Quote Widget",
                 "<Quote Widget>",
                 "[Quote widget]",
-                "<Quick Quote Widget>"
+                "<Quick Quote Widget>",
+                "[quick_quote_widget]"
             ],
             "output": "[quick_quote_widget]",
             "max_occurrences": 1
@@ -18,7 +19,8 @@
             "id": "type_of_coverage",
             "match": [
                 "Types of Coverage widget",
-                "<Types of Coverage Widget>"
+                "<Types of Coverage Widget>",
+                "[products_access_widget]"
             ],
             "output": "[products_access_widget]",
             "max_occurrences": 1
@@ -28,7 +30,8 @@
             "match": [
                 "Quote Box Widget with Icons",
                 "<Quote Box Widget with Icons>",
-                "<CTA Box>"
+                "<CTA Box>",
+                "[component_get_call_out]"
             ],
             "output": "[component_get_call_out]",
             "max_occurrences": 1
