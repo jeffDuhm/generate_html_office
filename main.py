@@ -4,7 +4,7 @@ import re
 from docx import Document
 import json
 
-from parser.word_reader import read_word_document
+from parser.word_reader import WordReader
 from renderer.html_renderer import renderer_html
 from normalizers.blocks_normalizer import normalize_blocks
 
@@ -35,7 +35,8 @@ def main(site, input_dir="input", output_dir="output"):
         
         doc = Document(file)
         
-        blocks = read_word_document(doc, rules)
+        reader = WordReader(rules)
+        blocks = reader.parse_document(doc)
         normalized_blocks = normalize_blocks(blocks)
         html = renderer_html(normalized_blocks, rules)
         

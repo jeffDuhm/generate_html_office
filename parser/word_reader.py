@@ -5,160 +5,165 @@ from docx.table import Table
 from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl
 
-def extract_content(paragraph):
-    content = []
+class WordReader:
     
-    for item in paragraph.iter_inner_content():
+    def __init__(self, rules):
         
-        if isinstance(item, Run):
-    
-            content.append({
-                "text": item.text,
-                "bold": bool(item.bold),
-                "link": False
-            })
+        self.rules = rules
+        
+    def parse_document(self, doc):
+        
+        blocks = []
+        
+        for block in self._iter_document_blocks(doc):
             
-        elif isinstance(item, Hyperlink):
-            
-            content.append({
-                "text": item.text,
-                "bold": False,
-                "link": item.address
-            })
-    
-    return content
-
-def find_widget(text,rules):
-    
-    text = text.lower().strip()
-    
-    for widget in rules["widgets"]:
-        
-        for match in widget["match"]:
-        
-            if text == match.lower().strip():
+            if isinstance(block, Paragraph):
                 
-                return widget
+                style = block.style.name
+                        
+                if not block.text.strip():
+                    continue
+                
+                if style.startswith("Heading"):
+                    
+                    blocks.append(self._parse_heading(block))
+                    
+                elif style == "List Paragraph":
+                    
+                    blocks.append(self._parse_list_item(block))
+                    
+                elif style == "Normal":
+                    
+                    widget = self._parse_widget(block)
+                    
+                    if widget:
+                        
+                        blocks.append(widget)
+                    
+                    else:
+                
+                        blocks.append(self._parse_paragraph(block))
+                        
+            elif isinstance(block, Table):
+                blocks.append(self._parse_table(block))
             
-    return None
+        return blocks        
+    
+    def _iter_document_blocks(self, doc):
+        
+        for element in doc.element.body:
 
-def parse_heading(paragraph):
-    
-    style = paragraph.style.name
-    
-    # Obtiene el numero de nivel (ej: "Heading 2" -> 2)
-    level = int(style.split()[-1])
-    
-    return {
-        "type": "heading",
-        "level": level,
-        "text": paragraph.text
-    }
-    
-def parse_list_item(paragraph):
-    
-    content = extract_content(paragraph)
-    
-    return {
-        "type": "list_item",
-        "content": content
-    }
+            if isinstance(element, CT_P):
 
-def parse_widget(paragraph, rules):
+                yield Paragraph(element, doc)
+
+            elif isinstance(element, CT_Tbl):
+
+                yield Table(element, doc)
     
-    widget = find_widget(paragraph.text, rules)
+    def _parse_heading(self, paragraph):
+        
+        style = paragraph.style.name
     
-    if not widget:
+        # Obtiene el numero de nivel (ej: "Heading 2" -> 2)
+        level = int(style.split()[-1])
+        
+        return {
+            "type": "heading",
+            "level": level,
+            "text": paragraph.text
+        }
+    
+    def _parse_paragraph(self, paragraph):
+        
+        content = self._extract_content(paragraph)
+
+        return {
+            "type": "paragraph",
+            "content": content
+        }
+    
+    def _parse_list_item(self, paragraph):
+        
+        content = self._extract_content(paragraph)
+    
+        return {
+            "type": "list_item",
+            "content": content
+        }
+
+    def _parse_widget(self, paragraph):
+        
+        widget = self._find_widget(paragraph.text)
+
+        if not widget:
+            return None
+        
+        return {
+            "type": "widget",
+            "widget_id": widget["id"],
+        }
+    
+    def _parse_table(self, table):
+        
+        table_rows = []
+
+        for row in table.rows:
+
+            rows_cells = []
+            
+            for cell in row.cells:
+                
+                cell_paragraphs = []
+                
+                for paragraph in cell.paragraphs:
+                    
+                    paragraph_content = self._extract_content(paragraph)
+                    
+                    cell_paragraphs.append(paragraph_content)
+
+                rows_cells.append(cell_paragraphs)
+                    
+            table_rows.append(rows_cells)
+            
+        return {
+            "type": "table",
+            "rows": table_rows
+        }
+    
+    def _extract_content(self, paragraph):
+        content = []
+
+        for item in paragraph.iter_inner_content():
+            
+            if isinstance(item, Run):
+        
+                content.append({
+                    "text": item.text,
+                    "bold": bool(item.bold),
+                    "link": False
+                })
+                
+            elif isinstance(item, Hyperlink):
+                
+                content.append({
+                    "text": item.text,
+                    "bold": False,
+                    "link": item.address
+                })
+        
+        return content
+    
+    def _find_widget(self, text):
+        
+        text = text.lower().strip()
+        
+        for widget in self.rules["widgets"]:
+            
+            for match in widget["match"]:
+            
+                if text == match.lower().strip():
+                    
+                    return widget
+                
         return None
-    
-    return {
-        "type": "widget",
-        "widget_id": widget["id"],
-    }
-
-def parse_paragraph(paragraph):
-    
-    content = extract_content(paragraph)
-    
-    return {
-        "type": "paragraph",
-        "content": content
-    }
-    
-def parse_table(table):
-    
-    table_rows = []
-    
-    for row in table.rows:
-
-        rows_cells = []
-        
-        for cell in row.cells:
-            
-            cell_paragraphs = []
-            
-            for paragraph in cell.paragraphs:
-                
-                paragraph_content = extract_content(paragraph)
-                
-                cell_paragraphs.append(paragraph_content)
-
-            rows_cells.append(cell_paragraphs)
-                
-        table_rows.append(rows_cells)
-        
-    return {
-        "type": "table",
-        "rows": table_rows
-    }
-    
-def iter_document_blocks(doc):
-    
-    for element in doc.element.body:
-
-        if isinstance(element, CT_P):
-
-            yield Paragraph(element, doc)
-
-        elif isinstance(element, CT_Tbl):
-
-            yield Table(element, doc)
-    
-def read_word_document(doc, rules):
-    
-    blocks = []
-    
-    for block in iter_document_blocks(doc):
-        
-        if isinstance(block, Paragraph):
-            
-        
-            style = block.style.name
-                    
-            if not block.text.strip():
-                continue
-            
-            if style.startswith("Heading"):
-                
-                blocks.append(parse_heading(block))
-                
-            elif style == "List Paragraph":
-                
-                blocks.append(parse_list_item(block))
-                
-            elif style == "Normal":
-                
-                widget = parse_widget(block, rules)
-                
-                if widget:
-                    
-                    blocks.append(widget)
-                
-                else:
-            
-                    blocks.append(parse_paragraph(block))
-                    
-        elif isinstance(block, Table):
-            blocks.append(parse_table(block))
-        
-    return blocks
