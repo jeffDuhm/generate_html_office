@@ -17,38 +17,47 @@ class WordReader:
         
         for block in self._iter_document_blocks(doc):
             
-            if isinstance(block, Paragraph):
-                
-                style = block.style.name
-                        
-                if not block.text.strip():
-                    continue
-                
-                if style.startswith("Heading"):
-                    
-                    blocks.append(self._parse_heading(block))
-                    
-                elif style == "List Paragraph":
-                    
-                    blocks.append(self._parse_list_item(block))
-                    
-                elif style == "Normal":
-                    
-                    widget = self._parse_widget(block)
-                    
-                    if widget:
-                        
-                        blocks.append(widget)
-                    
-                    else:
-                
-                        blocks.append(self._parse_paragraph(block))
-                        
-            elif isinstance(block, Table):
-                blocks.append(self._parse_table(block))
+            parse_block = self._parse_block(block)
             
-        return blocks        
+            if parse_block:
+                blocks.append(parse_block)
+            
+        return blocks
     
+    def _parse_block(self, block):
+        
+        if isinstance(block, Paragraph):
+            
+            if not block.text.strip():
+                
+                return None
+        
+            style = block.style.name
+            
+            if style.startswith("Heading"):
+                        
+                return self._parse_heading(block)
+                
+            elif style == "List Paragraph":
+                
+                return self._parse_list_item(block)
+                
+            elif style == "Normal":
+                
+                widget = self._parse_widget(block)
+                
+                if widget:
+                    
+                    return widget
+                
+                else:
+            
+                    return self._parse_paragraph(block)
+        
+        elif isinstance(block, Table):
+            
+            return self._parse_table(block)
+
     def _iter_document_blocks(self, doc):
         
         for element in doc.element.body:
