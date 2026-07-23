@@ -28,35 +28,37 @@ class WordReader:
         
         if isinstance(block, Paragraph):
             
-            if not block.text.strip():
-                
-                return None
-        
-            style = block.style.name
-            
-            if style.startswith("Heading"):
-                        
-                return self._parse_heading(block)
-                
-            elif style == "List Paragraph":
-                
-                return self._parse_list_item(block)
-                
-            elif style == "Normal":
-                
-                widget = self._parse_widget(block)
-                
-                if widget:
-                    
-                    return widget
-                
-                else:
-            
-                    return self._parse_paragraph(block)
-        
+            return self._parse_paragraph_block(block)
+
         elif isinstance(block, Table):
             
             return self._parse_table(block)
+        
+    def _parse_paragraph_block(self, block):
+        
+        if not block.text.strip():
+    
+            return None
+    
+        style = block.style.name
+        
+        if style.startswith("Heading"):
+                    
+            return self._parse_heading(block)
+            
+        elif style == "List Paragraph":
+            
+            return self._parse_list_item(block)
+            
+        elif style == "Normal":
+            
+            widget = self._parse_widget(block)
+            
+            if widget:
+                
+                return widget
+            
+            return self._parse_paragraph(block)
 
     def _iter_document_blocks(self, doc):
         
