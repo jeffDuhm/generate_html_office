@@ -149,7 +149,7 @@ class WordReader:
             
             if isinstance(item, Run):
             
-                content.append(self._parse_hyperlink(item))
+                content.append(self._parse_run(item))
                 
             elif isinstance(item, Hyperlink):
             
@@ -172,7 +172,7 @@ class WordReader:
             "bold": False,
             "link": item.address
         }
-    
+        
     def _find_widget(self, text):
         
         text = text.lower().strip()
