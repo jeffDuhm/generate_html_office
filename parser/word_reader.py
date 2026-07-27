@@ -148,22 +148,30 @@ class WordReader:
         for item in paragraph.iter_inner_content():
             
             if isinstance(item, Run):
-        
-                content.append({
-                    "text": item.text,
-                    "bold": bool(item.bold),
-                    "link": False
-                })
+            
+                content.append(self._parse_hyperlink(item))
                 
             elif isinstance(item, Hyperlink):
-                
-                content.append({
-                    "text": item.text,
-                    "bold": False,
-                    "link": item.address
-                })
+            
+                content.append(self._parse_hyperlink(item))
         
         return content
+    
+    def _parse_run(self, item):
+        
+        return {
+            "text": item.text,
+            "bold": bool(item.bold),
+            "link": False
+        }
+        
+    def _parse_hyperlink(self, item):
+        
+        return {
+            "text": item.text,
+            "bold": False,
+            "link": item.address
+        }
     
     def _find_widget(self, text):
         
