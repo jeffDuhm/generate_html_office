@@ -4,6 +4,7 @@ from docx.text.paragraph import Paragraph
 from docx.table import Table
 from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl
+from blocks.paragraph import ParagraphBlock
 
 class WordReader:
     
@@ -89,10 +90,7 @@ class WordReader:
         
         content = self._extract_content(paragraph)
 
-        return {
-            "type": "paragraph",
-            "content": content
-        }
+        return ParagraphBlock(content)
     
     def _parse_list_item(self, paragraph):
         

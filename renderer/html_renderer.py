@@ -1,3 +1,5 @@
+from blocks.paragraph import ParagraphBlock
+
 def find_special_button(text, rules):
     
     text = text.lower().strip()
@@ -78,7 +80,7 @@ def render_heading(block):
 
 def render_paragraph(block, rules):
     
-    paragraph_content = render_content(block["content"], rules)
+    paragraph_content = render_content(block.content, rules)
     
     return f'<p>{paragraph_content}</p>'
 
@@ -138,45 +140,45 @@ def renderer_html(blocks, rules):
     
     for block in blocks:
         
-        if (
-            use_sections
-            and block["type"] in ["heading", "paragraph", "list"]
-        ):
+        # if (
+        #     use_sections
+        #     and block["type"] in ["heading", "paragraph", "list"]
+        # ):
 
-                if not open_section:
+        #         if not open_section:
                     
-                    html.append("<p>[open-section]</p>")
+        #             html.append("<p>[open-section]</p>")
                     
-                    open_section = True
-
-        if block["type"] == "heading":
-            
-            html.append(render_heading(block))
+        #             open_section = True
         
-        elif block["type"] == "paragraph":
+        if isinstance(block, ParagraphBlock):
             
             html.append(render_paragraph(block, rules))
+            
+    #     elif block["type"] == "heading":
         
-        elif block["type"] == "list":
-            
-            html.append(render_list(block, rules))
+    #             html.append(render_heading(block))
         
-        elif block["type"] == "table":
+    #     elif block["type"] == "list":
             
-            html.append(render_table(block, rules))
-            
-        elif block["type"] == "widget":
-            
-            if use_sections and open_section:
-                
-                html.append(f'<p>[close-section]</p>')
-                
-                open_section = False
-            
-            html.append(render_widget(block, rules))
-                
-    if use_sections and open_section:
+    #         html.append(render_list(block, rules))
         
-        html.append(f"<p>[close-section]</p>")
+    #     elif block["type"] == "table":
+            
+    #         html.append(render_table(block, rules))
+            
+    #     elif block["type"] == "widget":
+            
+    #         if use_sections and open_section:
+                
+    #             html.append(f'<p>[close-section]</p>')
+                
+    #             open_section = False
+            
+    #         html.append(render_widget(block, rules))
+                
+    # if use_sections and open_section:
+        
+    #     html.append(f"<p>[close-section]</p>")
             
     return "".join(html)

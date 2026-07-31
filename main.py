@@ -37,8 +37,8 @@ def main(site, input_dir="input", output_dir="output"):
         
         reader = WordReader(rules)
         blocks = reader.parse_document(doc)
-        normalized_blocks = normalize_blocks(blocks)
-        html = renderer_html(normalized_blocks, rules)
+        #normalized_blocks = normalize_blocks(blocks)
+        html = renderer_html(blocks, rules)
         
         output_name = f"{sanitize_filename(file.name)}.html"
         output_file = output_path / output_name
