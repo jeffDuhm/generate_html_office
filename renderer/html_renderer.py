@@ -1,4 +1,5 @@
 from blocks.paragraph import ParagraphBlock
+from blocks.heading import HeadingBlock
 
 def find_special_button(text, rules):
     
@@ -76,7 +77,7 @@ def render_content(content, rules):
 
 def render_heading(block):
     
-    return f'<h{block["level"]}>{block["text"]}</h{block["level"]}>'
+    return f'<h{block.level}>{block.text}</h{block.level}>'
 
 def render_paragraph(block, rules):
     
@@ -155,9 +156,9 @@ def renderer_html(blocks, rules):
             
             html.append(render_paragraph(block, rules))
             
-    #     elif block["type"] == "heading":
-        
-    #             html.append(render_heading(block))
+        elif isinstance(block, HeadingBlock):
+            
+            html.append(render_heading(block))
         
     #     elif block["type"] == "list":
             

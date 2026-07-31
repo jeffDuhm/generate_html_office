@@ -5,6 +5,7 @@ from docx.table import Table
 from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl
 from blocks.paragraph import ParagraphBlock
+from blocks.heading import HeadingBlock
 
 class WordReader:
     
@@ -80,11 +81,7 @@ class WordReader:
         # Obtiene el numero de nivel (ej: "Heading 2" -> 2)
         level = int(style.split()[-1])
         
-        return {
-            "type": "heading",
-            "level": level,
-            "text": paragraph.text
-        }
+        return HeadingBlock(level, paragraph.text)
     
     def _parse_paragraph(self, paragraph):
         
