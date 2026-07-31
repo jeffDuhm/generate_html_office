@@ -1,3 +1,6 @@
+from blocks.list import ListBlock
+from blocks.list_item import ListItemBlock
+
 # Normaliza estructura de datos por tipos
 def normalize_blocks(blocks):
     
@@ -7,18 +10,15 @@ def normalize_blocks(blocks):
     
     for block in blocks:
 
-        if block["type"] == "list_item":
+        if isinstance(block, ListItemBlock):
             
-            current_list_items.append(block["content"])
+            current_list_items.append(block.content)
             
         else:
             
             if current_list_items:
                 
-                normalized_blocks.append({
-                    "type": "list",
-                    "items": current_list_items
-                })
+                normalized_blocks.append(ListBlock(current_list_items))
                 
                 current_list_items = []
                 
@@ -26,9 +26,6 @@ def normalize_blocks(blocks):
             
     if current_list_items:
         
-        normalized_blocks.append({
-            "type": "list",
-            "items": current_list_items
-        })
+        normalized_blocks.append(ListBlock(current_list_items))
     
     return normalized_blocks

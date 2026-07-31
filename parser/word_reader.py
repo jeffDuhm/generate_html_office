@@ -6,6 +6,7 @@ from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl
 from blocks.paragraph import ParagraphBlock
 from blocks.heading import HeadingBlock
+from blocks.list_item import ListItemBlock
 
 class WordReader:
     
@@ -93,10 +94,7 @@ class WordReader:
         
         content = self._extract_content(paragraph)
     
-        return {
-            "type": "list_item",
-            "content": content
-        }
+        return ListItemBlock(content)
 
     def _parse_widget(self, paragraph):
         

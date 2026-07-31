@@ -1,3 +1,4 @@
+from blocks.list import ListBlock
 from blocks.paragraph import ParagraphBlock
 from blocks.heading import HeadingBlock
 
@@ -89,7 +90,7 @@ def render_list(block, rules):
     
     list_items = []
     
-    for item in block["items"]:
+    for item in block.items:
         
         item_content = render_content(item, rules)
         
@@ -160,9 +161,9 @@ def renderer_html(blocks, rules):
             
             html.append(render_heading(block))
         
-    #     elif block["type"] == "list":
+        elif isinstance(block, ListBlock):
             
-    #         html.append(render_list(block, rules))
+            html.append(render_list(block, rules))
         
     #     elif block["type"] == "table":
             
