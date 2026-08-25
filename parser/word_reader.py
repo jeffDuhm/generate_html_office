@@ -8,6 +8,7 @@ from blocks.paragraph import ParagraphBlock
 from blocks.heading import HeadingBlock
 from blocks.list_item import ListItemBlock
 from blocks.table import TableBlock
+from blocks.widget import WidgetBlock
 
 class WordReader:
     
@@ -104,10 +105,7 @@ class WordReader:
         if not widget:
             return None
         
-        return {
-            "type": "widget",
-            "widget_id": widget["id"],
-        }
+        return WidgetBlock(widget["id"])
     
     def _parse_table(self, table):
         

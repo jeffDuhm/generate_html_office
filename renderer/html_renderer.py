@@ -2,6 +2,7 @@ from blocks.list import ListBlock
 from blocks.paragraph import ParagraphBlock
 from blocks.heading import HeadingBlock
 from blocks.table import TableBlock
+from blocks.widget import WidgetBlock
 
 def find_special_button(text, rules):
     
@@ -129,7 +130,7 @@ def render_widget(block, rules):
     
     for widget in rules["widgets"]:
         
-        if widget["id"] == block["widget_id"]:
+        if widget["id"] == block.id:
             
             return f"<p>{widget['output']}</p>"
 
@@ -170,15 +171,15 @@ def renderer_html(blocks, rules):
             
             html.append(render_table(block, rules))
             
-    #     elif block["type"] == "widget":
+        elif isinstance(block, WidgetBlock):
             
-    #         if use_sections and open_section:
+            if use_sections and open_section:
                 
-    #             html.append(f'<p>[close-section]</p>')
+                html.append(f'<p>[close-section]</p>')
                 
-    #             open_section = False
+                open_section = False
             
-    #         html.append(render_widget(block, rules))
+            html.append(render_widget(block, rules))
                 
     # if use_sections and open_section:
         
