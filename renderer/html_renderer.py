@@ -144,16 +144,15 @@ def renderer_html(blocks, rules):
     
     for block in blocks:
         
-        # if (
-        #     use_sections
-        #     and block["type"] in ["heading", "paragraph", "list"]
-        # ):
-
-        #         if not open_section:
+        if (
+            use_sections
+            and isinstance(block, (HeadingBlock, ParagraphBlock, ListBlock))
+        ):
+            if not open_section:
+                
+                html.append("<p>[open-section]</p>")
                     
-        #             html.append("<p>[open-section]</p>")
-                    
-        #             open_section = True
+                open_section = True
         
         if isinstance(block, ParagraphBlock):
             
@@ -181,8 +180,8 @@ def renderer_html(blocks, rules):
             
             html.append(render_widget(block, rules))
                 
-    # if use_sections and open_section:
+    if use_sections and open_section:
         
-    #     html.append(f"<p>[close-section]</p>")
+        html.append(f"<p>[close-section]</p>")
             
     return "".join(html)
