@@ -7,6 +7,7 @@ from docx.oxml.table import CT_Tbl
 from blocks.paragraph import ParagraphBlock
 from blocks.heading import HeadingBlock
 from blocks.list_item import ListItemBlock
+from blocks.table import TableBlock
 
 class WordReader:
     
@@ -130,10 +131,7 @@ class WordReader:
                     
             table_rows.append(rows_cells)
             
-        return {
-            "type": "table",
-            "rows": table_rows
-        }
+        return TableBlock(table_rows)
     
     def _extract_content(self, paragraph):
         content = []

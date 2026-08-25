@@ -1,6 +1,7 @@
 from blocks.list import ListBlock
 from blocks.paragraph import ParagraphBlock
 from blocks.heading import HeadingBlock
+from blocks.table import TableBlock
 
 def find_special_button(text, rules):
     
@@ -102,7 +103,7 @@ def render_table(block, rules):
     
     rows_html = []
     
-    for row_index, row in enumerate(block["rows"]):
+    for row_index, row in enumerate(block.rows):
         
         cells_html = []
         
@@ -165,9 +166,9 @@ def renderer_html(blocks, rules):
             
             html.append(render_list(block, rules))
         
-    #     elif block["type"] == "table":
+        elif isinstance(block, TableBlock):
             
-    #         html.append(render_table(block, rules))
+            html.append(render_table(block, rules))
             
     #     elif block["type"] == "widget":
             
