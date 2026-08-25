@@ -1,3 +1,9 @@
+from blocks.list import ListBlock
+from blocks.paragraph import ParagraphBlock
+from blocks.heading import HeadingBlock
+from blocks.table import TableBlock
+from blocks.widget import WidgetBlock
+
 def find_special_button(text, rules):
     
     text = text.lower().strip()
@@ -74,11 +80,11 @@ def render_content(content, rules):
 
 def render_heading(block):
     
-    return f'<h{block["level"]}>{block["text"]}</h{block["level"]}>'
+    return f'<h{block.level}>{block.text}</h{block.level}>'
 
 def render_paragraph(block, rules):
     
-    paragraph_content = render_content(block["content"], rules)
+    paragraph_content = render_content(block.content, rules)
     
     return f'<p>{paragraph_content}</p>'
 
@@ -86,7 +92,7 @@ def render_list(block, rules):
     
     list_items = []
     
-    for item in block["items"]:
+    for item in block.items:
         
         item_content = render_content(item, rules)
         
@@ -98,7 +104,7 @@ def render_table(block, rules):
     
     rows_html = []
     
-    for row_index, row in enumerate(block["rows"]):
+    for row_index, row in enumerate(block.rows):
         
         cells_html = []
         
@@ -124,7 +130,7 @@ def render_widget(block, rules):
     
     for widget in rules["widgets"]:
         
-        if widget["id"] == block["widget_id"]:
+        if widget["id"] == block.id:
             
             return f"<p>{widget['output']}</p>"
 
@@ -140,32 +146,31 @@ def renderer_html(blocks, rules):
         
         if (
             use_sections
-            and block["type"] in ["heading", "paragraph", "list"]
+            and isinstance(block, (HeadingBlock, ParagraphBlock, ListBlock))
         ):
-
-                if not open_section:
+            if not open_section:
+                
+                html.append("<p>[open-section]</p>")
                     
-                    html.append("<p>[open-section]</p>")
-                    
-                    open_section = True
-
-        if block["type"] == "heading":
+                open_section = True
+        
+        if isinstance(block, ParagraphBlock):
+            
+            html.append(render_paragraph(block, rules))
+            
+        elif isinstance(block, HeadingBlock):
             
             html.append(render_heading(block))
         
-        elif block["type"] == "paragraph":
-            
-            html.append(render_paragraph(block, rules))
-        
-        elif block["type"] == "list":
+        elif isinstance(block, ListBlock):
             
             html.append(render_list(block, rules))
         
-        elif block["type"] == "table":
+        elif isinstance(block, TableBlock):
             
             html.append(render_table(block, rules))
             
-        elif block["type"] == "widget":
+        elif isinstance(block, WidgetBlock):
             
             if use_sections and open_section:
                 

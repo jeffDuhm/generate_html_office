@@ -4,6 +4,11 @@ from docx.text.paragraph import Paragraph
 from docx.table import Table
 from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl
+from blocks.paragraph import ParagraphBlock
+from blocks.heading import HeadingBlock
+from blocks.list_item import ListItemBlock
+from blocks.table import TableBlock
+from blocks.widget import WidgetBlock
 
 class WordReader:
     
@@ -79,29 +84,19 @@ class WordReader:
         # Obtiene el numero de nivel (ej: "Heading 2" -> 2)
         level = int(style.split()[-1])
         
-        return {
-            "type": "heading",
-            "level": level,
-            "text": paragraph.text
-        }
+        return HeadingBlock(level, paragraph.text)
     
     def _parse_paragraph(self, paragraph):
         
         content = self._extract_content(paragraph)
 
-        return {
-            "type": "paragraph",
-            "content": content
-        }
+        return ParagraphBlock(content)
     
     def _parse_list_item(self, paragraph):
         
         content = self._extract_content(paragraph)
     
-        return {
-            "type": "list_item",
-            "content": content
-        }
+        return ListItemBlock(content)
 
     def _parse_widget(self, paragraph):
         
@@ -110,10 +105,7 @@ class WordReader:
         if not widget:
             return None
         
-        return {
-            "type": "widget",
-            "widget_id": widget["id"],
-        }
+        return WidgetBlock(widget["id"])
     
     def _parse_table(self, table):
         
@@ -137,10 +129,7 @@ class WordReader:
                     
             table_rows.append(rows_cells)
             
-        return {
-            "type": "table",
-            "rows": table_rows
-        }
+        return TableBlock(table_rows)
     
     def _extract_content(self, paragraph):
         content = []
@@ -172,7 +161,7 @@ class WordReader:
             "bold": False,
             "link": item.address
         }
-    
+        
     def _find_widget(self, text):
         
         text = text.lower().strip()
