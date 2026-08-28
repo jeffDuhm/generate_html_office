@@ -5,7 +5,7 @@ from docx import Document
 import json
 
 from parser.word_reader import WordReader
-from renderer.html_renderer import renderer_html
+from renderer.html_renderer import HTMLRenderer
 from normalizers.blocks_normalizer import normalize_blocks
 
 # Carga el rules correspondiente de cada sitio
@@ -38,7 +38,8 @@ def main(site, input_dir="input", output_dir="output"):
         reader = WordReader(rules)
         blocks = reader.parse_document(doc)
         normalized_blocks = normalize_blocks(blocks)
-        html = renderer_html(normalized_blocks, rules)
+        render = HTMLRenderer(rules)
+        html = render.render_document(normalized_blocks)
         
         output_name = f"{sanitize_filename(file.name)}.html"
         output_file = output_path / output_name
