@@ -84,11 +84,15 @@ class HTMLRenderer:
                     
                     html_content.append(f'<a href="{link}">{text}</a>')
                     
-                else:
+                elif self._is_internal_link(link):
                     
                     new_url = self._transform_link(link)
                 
-                    html_content.append(f'<a href="{new_url}" target="_blank">{text}</a>')
+                    html_content.append(f'<a href="{new_url}">{text}</a>')
+                    
+                else:
+                    
+                    html_content.append(f'<a href="{link}" target="_blank">{text}</a>')
             
             elif piece["bold"]:
                 
@@ -190,6 +194,16 @@ class HTMLRenderer:
                 break
                 
         return url
+    
+    def _is_internal_link(self, url):
+        
+        for internal in self.rules["link_replacements"]:
+            
+            if url.startswith(internal["from"]):
+                
+                return True
+            
+        return False
 
 
         
