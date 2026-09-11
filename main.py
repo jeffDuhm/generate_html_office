@@ -1,12 +1,9 @@
 import argparse
 from pathlib import Path
 import re
-from docx import Document
 import json
 
-from parser.word_reader import WordReader
-from renderer.html_renderer import HTMLRenderer
-from normalizers.blocks_normalizer import BlockNormalizer
+from converter.word_to_html_converter import WordToHtmlConverter
 
 # Carga el rules correspondiente de cada sitio
 def load_rules(site):
@@ -33,14 +30,8 @@ def main(site, input_dir="input", output_dir="output"):
     
     for file in docx_files:
         
-        doc = Document(file)
-        
-        reader = WordReader(rules)
-        blocks = reader.parse_document(doc)
-        normalizer = BlockNormalizer(blocks)
-        normalized_blocks = normalizer.normalize()
-        render = HTMLRenderer(rules)
-        html = render.render_document(normalized_blocks)
+        converter = WordToHtmlConverter(file, rules)
+        html = converter.convert()
         
         output_name = f"{sanitize_filename(file.name)}.html"
         output_file = output_path / output_name
