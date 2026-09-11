@@ -6,7 +6,7 @@ import json
 
 from parser.word_reader import WordReader
 from renderer.html_renderer import HTMLRenderer
-from normalizers.blocks_normalizer import normalize_blocks
+from normalizers.blocks_normalizer import BlockNormalizer
 
 # Carga el rules correspondiente de cada sitio
 def load_rules(site):
@@ -37,7 +37,8 @@ def main(site, input_dir="input", output_dir="output"):
         
         reader = WordReader(rules)
         blocks = reader.parse_document(doc)
-        normalized_blocks = normalize_blocks(blocks)
+        normalizer = BlockNormalizer(blocks)
+        normalized_blocks = normalizer.normalize()
         render = HTMLRenderer(rules)
         html = render.render_document(normalized_blocks)
         
