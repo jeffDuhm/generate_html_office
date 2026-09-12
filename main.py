@@ -1,17 +1,8 @@
 import argparse
 from pathlib import Path
-import re
-
+from utils.filename import sanitize_filename
 from config.config_loader import ConfigLoader
 from converter.word_to_html_converter import WordToHtmlConverter
-    
-def sanitize_filename(filename: str) -> str:
-    name = Path(filename).stem # sin .docx
-
-    name = re.sub(r"[^\w\s-]", "", name)
-    name = re.sub(r"\s+", "-", name.strip())
-    
-    return name.lower()
     
 def main(site, input_dir="input", output_dir="output"):
     
