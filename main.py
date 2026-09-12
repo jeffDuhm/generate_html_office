@@ -1,14 +1,9 @@
 import argparse
 from pathlib import Path
 import re
-import json
 
+from config.config_loader import ConfigLoader
 from converter.word_to_html_converter import WordToHtmlConverter
-
-# Carga el rules correspondiente de cada sitio
-def load_rules(site):
-    with open(f"config/{site}.json", 'r', encoding="utf-8") as file:
-        return json.load(file)
     
 def sanitize_filename(filename: str) -> str:
     name = Path(filename).stem # sin .docx
@@ -20,7 +15,7 @@ def sanitize_filename(filename: str) -> str:
     
 def main(site, input_dir="input", output_dir="output"):
     
-    rules = load_rules(site)
+    rules = ConfigLoader.load_rules(site)
     
     input_path = Path(input_dir)
     output_path = Path(output_dir)
