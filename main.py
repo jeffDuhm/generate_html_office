@@ -3,6 +3,7 @@ from pathlib import Path
 from utils.filename import sanitize_filename
 from config.config_loader import ConfigLoader
 from converter.word_to_html_converter import WordToHtmlConverter
+from docx import Document
     
 def main(site, input_dir="input", output_dir="output"):
     
@@ -16,7 +17,9 @@ def main(site, input_dir="input", output_dir="output"):
     
     for file in docx_files:
         
-        converter = WordToHtmlConverter(file, rules)
+        doc = Document(file)
+        
+        converter = WordToHtmlConverter(doc, rules)
         html = converter.convert()
         
         output_name = f"{sanitize_filename(file.name)}.html"
