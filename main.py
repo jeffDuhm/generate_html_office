@@ -3,21 +3,18 @@ from pathlib import Path
 from utils.filename import sanitize_filename
 from config.config_loader import ConfigLoader
 from converter.word_to_html_converter import WordToHtmlConverter
-from docx import Document
+from loader.document_loader import DocumentLoader
     
 def main(site, input_dir="input", output_dir="output"):
     
     rules = ConfigLoader.load_rules(site)
     
-    input_path = Path(input_dir)
+    loader = DocumentLoader(input_dir)
+    
     output_path = Path(output_dir)
     output_path.mkdir(exist_ok=True)
     
-    docx_files = list(input_path.glob("*.docx"))
-    
-    for file in docx_files:
-        
-        doc = Document(file)
+    for file, doc in loader.load():
         
         converter = WordToHtmlConverter(doc, rules)
         html = converter.convert()
