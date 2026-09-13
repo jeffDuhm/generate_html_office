@@ -1,46 +1,23 @@
 import argparse
 from pathlib import Path
-import re
-from docx import Document
-import json
-
-from parser.word_reader import WordReader
-from renderer.html_renderer import HTMLRenderer
-from normalizers.blocks_normalizer import BlockNormalizer
-
-# Carga el rules correspondiente de cada sitio
-def load_rules(site):
-    with open(f"config/{site}.json", 'r', encoding="utf-8") as file:
-        return json.load(file)
-    
-def sanitize_filename(filename: str) -> str:
-    name = Path(filename).stem # sin .docx
-
-    name = re.sub(r"[^\w\s-]", "", name)
-    name = re.sub(r"\s+", "-", name.strip())
-    
-    return name.lower()
+from utils.filename import sanitize_filename
+from config.config_loader import ConfigLoader
+from converter.word_to_html_converter import WordToHtmlConverter
+from loader.document_loader import DocumentLoader
     
 def main(site, input_dir="input", output_dir="output"):
     
-    rules = load_rules(site)
+    rules = ConfigLoader.load_rules(site)
     
-    input_path = Path(input_dir)
+    loader = DocumentLoader(input_dir)
+    
     output_path = Path(output_dir)
     output_path.mkdir(exist_ok=True)
     
-    docx_files = list(input_path.glob("*.docx"))
-    
-    for file in docx_files:
+    for file, doc in loader.load():
         
-        doc = Document(file)
-        
-        reader = WordReader(rules)
-        blocks = reader.parse_document(doc)
-        normalizer = BlockNormalizer(blocks)
-        normalized_blocks = normalizer.normalize()
-        render = HTMLRenderer(rules)
-        html = render.render_document(normalized_blocks)
+        converter = WordToHtmlConverter(doc, rules)
+        html = converter.convert()
         
         output_name = f"{sanitize_filename(file.name)}.html"
         output_file = output_path / output_name
