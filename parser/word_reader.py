@@ -51,7 +51,7 @@ class WordReader:
                     
             return self._parse_heading(block)
             
-        elif style == "List Paragraph":
+        elif self._is_list_item(block):
             
             return self._parse_list_item(block)
             
