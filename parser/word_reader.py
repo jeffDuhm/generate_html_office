@@ -51,7 +51,7 @@ class WordReader:
                     
             return self._parse_heading(block)
             
-        elif style == "List Paragraph":
+        elif self._is_list_item(block):
             
             return self._parse_list_item(block)
             
@@ -64,6 +64,17 @@ class WordReader:
                 return widget
             
             return self._parse_paragraph(block)
+
+    def _is_list_item(self, paragraph):
+        
+        style = paragraph.style.name
+
+        if style.startswith("List"):
+            return True
+
+        pPr = paragraph._p.pPr
+
+        return pPr is not None and pPr.numPr is not None 
 
     def _iter_document_blocks(self, doc):
         
