@@ -1,44 +1,37 @@
 {
-    "site": "ino",
     "use_sections": true,
     "widgets": [
         {
-            "id": "quick_quote",
-            "match": [
+            "shortcode": "[widget_start_quote]",
+            "texts": [
                 "Quick Quote Widget",
                 "Quote Widget",
                 "<Quote Widget>",
                 "<Quick Quote Widget>",
                 "[Quote widget]"
-            ],
-            "output": "[widget_start_quote]",
-            "max_occurrences": 1
+            ]
         },
         {
-            "id": "type_of_coverage",
-            "match": [
+            "shortcode": "[widget_quick_quote]",
+            "texts": [
                 "Types of Coverage widget",
                 "<Types of Coverage Widget>"
-            ],
-            "output": "[widget_quick_quote]",
-            "max_occurrences": 1
+            ]
         },
         {
-            "id": "get_call_us",
-            "match": [
+            "shortcode": "[widget_knowledge]",
+            "texts": [
                 "Quote Box Widget with Icons",
                 "<Quote Box Widget with Icons>"
-            ],
-            "output": "[widget_knowledge]",
-            "max_occurrences": 1
+            ]
         }
 
     ],
-    "special_buttons": [],
-    "link_replacements": [
+    "button_texts": [],
+    "url_replacements": [
     {
-      "from": "https://www.insureone.com/",
-      "to": "https://insureone.confiedevstg.com/"
+      "source_url": "https://www.insureone.com/",
+      "target_url": "https://insureone.confiedevstg.com/"
     }
   ]
 }

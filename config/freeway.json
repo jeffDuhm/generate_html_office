@@ -1,67 +1,49 @@
 {
-    "site": "freeway",
-    "use_sections": true,
-    "widgets": [
-        {
-            "id": "quick_quote",
-            "match": [
-                "Quick Quote Widget",
-                "Quote Widget",
-                "<Quote Widget>",
-                "[Quote widget]",
-                "[widget_quick_quote]"
-            ],
-            "output": "[widget_quick_quote]",
-            "max_occurrences": 1
-        },
-        {
-            "id": "type_of_coverage",
-            "match": [
-                "Types of Coverage widget",
-                "<Types of Coverage Widget>",
-                "[widget_type_of_coverage]"
-            ],
-            "output": "[widget_type_of_coverage]",
-            "max_occurrences": 1
-        },
-        {
-            "id": "get_call_us",
-            "match": [
-                "Quote Box Widget with Icons",
-                "<Quote Box Widget with Icons>",
-                "[widget_get_call_us]"
-            ],
-            "output": "[widget_get_call_us]",
-            "max_occurrences": 1
-        }
-
-    ],
-    "special_buttons": [
-        {
-            "match": [ 
-                "quote online",
-                "start a quote online",
-                "free quote online",
-                "en línea",
-                "application online today",
-                "online",
-                "fast quote online",
-                "Get a free quote",
-                "start your free online quote"
-            ],
-            "render_as": "modal_button"
-        }
-    ],
-
-    "link_replacements": [
+  "use_sections": true,
+  "widgets": [
     {
-      "from": "https://www.freeway.com/",
-      "to": "https://freeway.confiedevstg.com/"
+      "shortcode": "[widget_quick_quote]",
+      "texts": [
+        "Quick Quote Widget",
+        "Quote Widget",
+        "<Quote Widget>",
+        "[Quote widget]"
+      ]
     },
     {
-        "from": "https://www.freewayseguros.com/",
-        "to": "https://freeway-es.confiedev.net/"
+      "shortcode": "[widget_type_of_coverage]",
+      "texts": [
+        "Types of Coverage widget",
+        "<Types of Coverage Widget>"
+      ]
+    },
+    {
+      "shortcode": "[widget_get_call_us]",
+      "texts": [
+        "Quote Box Widget with Icons",
+        "<Quote Box Widget with Icons>"
+      ]
+    }
+  ],
+  "button_texts": [
+    "quote online",
+    "start a quote online",
+    "free quote online",
+    "en línea",
+    "application online today",
+    "online",
+    "fast quote online",
+    "Get a free quote",
+    "start your free online quote"
+  ],
+  "url_replacements": [
+    {
+      "source_url": "https://www.freewayseguros.com/",
+      "target_url": "https://freewayseguros.confiedevstg.com/"
+    },
+    {
+      "source_url": "https://www.freeway.com/es",
+      "target_url": "https://freewayseguros.confiedevstg.com/"
     }
   ]
 }
-
