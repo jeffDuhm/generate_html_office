@@ -1,6 +1,6 @@
-from parser.word_reader import WordReader
-from renderer.html_renderer import HTMLRenderer
-from normalizers.blocks_normalizer import BlockNormalizer
+from converter.word_reader import WordReader
+from converter.html_renderer import HTMLRenderer
+from converter.blocks_normalizer import BlockNormalizer
 
 class WordToHtmlConverter:
     def __init__(self, document, rules):

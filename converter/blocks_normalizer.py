@@ -1,5 +1,5 @@
-from blocks.list import ListBlock
-from blocks.list_item import ListItemBlock
+from converter.blocks.list_block import ListBlock
+from converter.blocks.list_item import ListItemBlock
 
 # Normaliza estructura de datos por tipos
 class BlockNormalizer:

@@ -223,4 +223,4 @@ input/*
 !input/.gitkeep
 output/*
 
-/test
+/tests
