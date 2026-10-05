@@ -1,8 +1,8 @@
-from blocks.list import ListBlock
-from blocks.paragraph import ParagraphBlock
-from blocks.heading import HeadingBlock
-from blocks.table import TableBlock
-from blocks.widget import WidgetBlock
+from converter.blocks.list_block import ListBlock
+from converter.blocks.paragraph import ParagraphBlock
+from converter.blocks.heading import HeadingBlock
+from converter.blocks.table import TableBlock
+from converter.blocks.widget import WidgetBlock
 
 class HTMLRenderer:
     

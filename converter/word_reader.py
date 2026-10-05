@@ -4,11 +4,11 @@ from docx.text.paragraph import Paragraph
 from docx.table import Table
 from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl
-from blocks.paragraph import ParagraphBlock
-from blocks.heading import HeadingBlock
-from blocks.list_item import ListItemBlock
-from blocks.table import TableBlock
-from blocks.widget import WidgetBlock
+from converter.blocks.paragraph import ParagraphBlock
+from converter.blocks.heading import HeadingBlock
+from converter.blocks.list_item import ListItemBlock
+from converter.blocks.table import TableBlock
+from converter.blocks.widget import WidgetBlock
 
 class WordReader:
     
