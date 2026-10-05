@@ -123,7 +123,7 @@ class WordReader:
         if not widget:
             return None
         
-        return WidgetBlock(widget["id"])
+        return WidgetBlock(widget["shortcode"])
     
     def _parse_table(self, table):
         
@@ -186,7 +186,9 @@ class WordReader:
         
         for widget in self.rules["widgets"]:
             
-            for match in widget["match"]:
+            text_options = widget["texts"] + [widget["shortcode"]]
+            
+            for match in text_options:
             
                 if text == match.lower().strip():
                     

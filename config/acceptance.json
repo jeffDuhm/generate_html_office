@@ -1,48 +1,41 @@
 {
-    "site": "acceptance",
     "use_sections": false,
     "widgets": [
         {
-            "id": "quick_quote",
-            "match": [
+            "shortcode": "[quick_quote_widget]",
+            "texts": [
                 "Quick Quote Widget",
                 "Quote Widget",
                 "<Quote Widget>",
                 "[Quote widget]",
                 "<Quick Quote Widget>",
                 "[quick_quote_widget]"
-            ],
-            "output": "[quick_quote_widget]",
-            "max_occurrences": 1
+            ]
         },
         {
-            "id": "type_of_coverage",
-            "match": [
+            "shortcode": "[products_access_widget]",
+            "texts": [
                 "Types of Coverage widget",
                 "<Types of Coverage Widget>",
                 "[products_access_widget]"
-            ],
-            "output": "[products_access_widget]",
-            "max_occurrences": 1
+            ]
         },
         {
-            "id": "get_call_us",
-            "match": [
+            "shortcode": "[component_get_call_out]",
+            "texts": [
                 "Quote Box Widget with Icons",
                 "<Quote Box Widget with Icons>",
                 "<CTA Box>",
                 "[component_get_call_out]"
-            ],
-            "output": "[component_get_call_out]",
-            "max_occurrences": 1
+            ]
         }
 
     ],
-    "special_buttons": [],
-    "link_replacements": [
+    "button_texts": [],
+    "url_replacements": [
     {
-      "from": "https://www.acceptance.com/",
-      "to": "https://acceptance.confiedevstg.com/"
+      "source_url": "https://www.acceptance.com/",
+      "target_url": "https://acceptance.confiedevstg.com/"
     }
   ]
 }

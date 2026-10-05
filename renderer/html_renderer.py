@@ -70,9 +70,7 @@ class HTMLRenderer:
             
             if link:
                 
-                special_button = self._find_special_button(text)
-                
-                if special_button:
+                if self._is_button_text(text):
         
                     html_content.append(
                         f'<button class="js-hero-home-more-button">'
@@ -154,27 +152,19 @@ class HTMLRenderer:
 
     def _render_widget(self, block):
         
-        for widget in self.rules["widgets"]:
-            
-            if widget["id"] == block.id:
-                
-                return f"<p>{widget['output']}</p>"
+        return f"<p>{block.shortcode}</p>"
 
-        return ""
-
-    def _find_special_button(self, text):
+    def _is_button_text(self, text):
         
         text = text.lower().strip()
         
-        for button in self.rules["special_buttons"]:
+        for match in self.rules["button_texts"]:
             
-            for match in button["match"]:
-
-                if text == match.lower().strip():
+            if text == match.lower().strip():
                 
-                    return button
+                return True
             
-        return None
+        return False
     
     def _is_phone_link(self, url):
         
@@ -182,13 +172,13 @@ class HTMLRenderer:
 
     def _transform_link(self, url):
         
-        for replacement in self.rules["link_replacements"]:
+        for replacement in self.rules["url_replacements"]:
             
-            if url.startswith(replacement["from"]):
+            if url.startswith(replacement["source_url"]):
                 
                 url = url.replace(
-                    replacement["from"], 
-                    replacement["to"]
+                    replacement["source_url"], 
+                    replacement["target_url"]
                 )
                 
                 break
@@ -197,13 +187,10 @@ class HTMLRenderer:
     
     def _is_internal_link(self, url):
         
-        for internal in self.rules["link_replacements"]:
+        for internal in self.rules["url_replacements"]:
             
-            if url.startswith(internal["from"]):
+            if url.startswith(internal["source_url"]):
                 
                 return True
             
         return False
-
-
-        
