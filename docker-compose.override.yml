@@ -1,0 +1,13 @@
+version: '2'
+services:
+  backend:
+    environment:
+      EXCLUDE_PORTS: 443
+      VIRTUAL_HOST: ${PROJECT_DOMAIN}
+    volumes:
+      - ./src:/app
+      - $HOME/.aws:/root/.aws
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.shazam.rule=Host(`${PROJECT_DOMAIN}`)'
+      - 'traefik.http.services.shazam.loadbalancer.server.port=7415'
