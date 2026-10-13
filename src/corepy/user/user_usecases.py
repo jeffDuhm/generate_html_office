@@ -119,7 +119,7 @@ class UserUsecases:
         )
         self.logger.info("First admin created")
         
-    def delete(self, user_id: int, current_user_id: int = 0) -> ResponseSuccessSchema:
+    def delete(self, user_id: int, current_user_id: int) -> ResponseSuccessSchema:
         if user_id == current_user_id:
             raise CannotDeleteSelfError()
         

@@ -1,12 +1,14 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Depends
 from fastapi.responses import JSONResponse
 
 from corepy.shared.schemas.response_schemas import ResponseErrorSchema
+from corepy.user.user_dbs import UsersDB
 from corepy.user.user_exceptions import CannotDeleteSelfError, RepeatedEmailError, UserInUseError, UserNotFoundError
 from corepy.user.user_schemas import CreateUserSchema, UpdateUserSchema
 from corepy.user.user_usecases import UserUsecases
+from api.dependencies import get_current_user, require_admin
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(require_admin)])
 
 @router.get("")
 def get_all():
@@ -56,9 +58,9 @@ def update(user_id: int, user: UpdateUserSchema):
         )
 
 @router.delete("/{user_id}")
-def delete(user_id: int):
+def delete(user_id: int, current_user: UsersDB = Depends(get_current_user)):
     try:
-        result_user = UserUsecases().delete(user_id)
+        result_user = UserUsecases().delete(user_id, current_user.id)
         return result_user
     except UserNotFoundError as e:
         response_error = ResponseErrorSchema(message=str(e))

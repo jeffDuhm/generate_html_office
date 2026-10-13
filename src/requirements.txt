@@ -7,3 +7,4 @@ pymysql
 python-dotenv
 bcrypt
 email-validator
+PyJWT
