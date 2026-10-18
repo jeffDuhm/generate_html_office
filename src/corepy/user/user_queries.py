@@ -2,14 +2,14 @@ from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
-from corepy.shared.mysql.base import SessionLocal
 from corepy.user.user_dbs import UsersDB
 
 
 class UserQueries:
-    def __init__(self):
-        self.db = SessionLocal()
+    def __init__(self, db: Session):
+        self.db = db
 
     def get_all(self) -> list[UsersDB]:
         query = select(UsersDB).order_by(UsersDB.id)

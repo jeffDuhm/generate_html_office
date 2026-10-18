@@ -1,5 +1,7 @@
 import os
 
+from sqlalchemy.orm import Session
+
 from corepy.shared.logging.logging import Logger
 from corepy.shared.schemas.response_schemas import ResponseSuccessSchema
 from corepy.shared.utils.password import Password
@@ -20,11 +22,12 @@ from corepy.user.user_schemas import (
 )
 
 class UserUsecases:
-    def __init__(self):
+    def __init__(self, db: Session):
+        self.db = db
         self.logger = Logger(__name__)
 
     def get_all(self) -> ResponseSuccessSchema:
-        db_users = UserQueries().get_all()
+        db_users = UserQueries(self.db).get_all()
 
         users = []
         for db_user in db_users:
@@ -33,7 +36,7 @@ class UserUsecases:
         return ResponseSuccessSchema(message=SuccessUserMessages.USER_LIST, data=users)
 
     def get_by_id(self, user_id: int) -> ResponseSuccessSchema:
-        db_user = UserQueries().get_by_id(user_id)
+        db_user = UserQueries(self.db).get_by_id(user_id)
         if not db_user:
             raise UserNotFoundError()
 
@@ -41,7 +44,7 @@ class UserUsecases:
         return ResponseSuccessSchema(message=SuccessUserMessages.USER_GET, data=user)
 
     def create(self, new_user: CreateUserSchema) -> ResponseSuccessSchema:
-        queries = UserQueries()
+        queries = UserQueries(self.db)
 
         if queries.get_by_email(new_user.email):
             raise RepeatedEmailError()
@@ -58,7 +61,7 @@ class UserUsecases:
         return ResponseSuccessSchema(message=SuccessUserMessages.USER_CREATED, data=user)
 
     def update(self, user_id: int, user_update: UpdateUserSchema) -> ResponseSuccessSchema:
-        queries = UserQueries()
+        queries = UserQueries(self.db)
 
         db_user = queries.get_by_id(user_id)
         if not db_user:
@@ -81,7 +84,7 @@ class UserUsecases:
 
     def authenticate(self, credentials: UserAuthSchema):
 
-        db_user = UserQueries().get_by_email(credentials.email)
+        db_user = UserQueries(self.db).get_by_email(credentials.email)
         if not db_user:
             raise InvalidCredentialsError()
 
@@ -94,7 +97,7 @@ class UserUsecases:
         return db_user
 
     def ensure_first_admin(self) -> None:
-        queries = UserQueries()
+        queries = UserQueries(self.db)
         if queries.exists_admin():
             return
 
@@ -123,7 +126,7 @@ class UserUsecases:
         if user_id == current_user_id:
             raise CannotDeleteSelfError()
         
-        queries = UserQueries()
+        queries = UserQueries(self.db)
         db_user = queries.get_by_id(user_id)
         if not db_user:
             raise UserNotFoundError()
