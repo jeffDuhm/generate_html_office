@@ -1,51 +1,31 @@
 class UserNotFoundError(Exception):
-    message = "User not found."
-
-    def __str__(self):
-        return self.message
-
+    def __init__(self):
+        super().__init__("User not found")
 
 class RepeatedEmailError(Exception):
-    message = "Someone is already using this email, please write a different one."
-
-    def __str__(self):
-        return self.message
-
+    def __init__(self):
+        super().__init__("Someone is already using this email, please write a different one")
 
 class InvalidCredentialsError(Exception):
-    message = "Invalid email or password."
-
-    def __str__(self):
-        return self.message
-
+    def __init__(self):
+        super().__init__("Invalid email or password")
 
 class InvalidToken(Exception):
-    message = "Invalid token."
-
-    def __str__(self):
-        return self.message
-
+    def __init__(self):
+        super().__init__("Invalid token")
 
 class ExpiredToken(Exception):
-    message = "Expired token."
-
-    def __str__(self):
-        return self.message
+    def __init__(self):
+        super().__init__("Expired token")
     
 class InactiveUserError(Exception):
-    message = "User is inactive."
-
-    def __str__(self):
-        return self.message
+    def __init__(self):
+        super().__init__("User is inactive")
     
 class UserInUseError(Exception):
-    message = "User has related records and cannot be deleted. Deactivate it instead."
-
-    def __str__(self):
-        return self.message
+    def __init__(self):
+        super().__init__("User has related records and cannot be deleted. Deactivate it instead")
 
 class CannotDeleteSelfError(Exception):
-    message = "You cannot delete your own user."
-
-    def __str__(self):
-        return self.message
+    def __init__(self):
+        super().__init__("You cannot delete your own user")
