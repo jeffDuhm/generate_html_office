@@ -29,3 +29,7 @@ class UserInUseError(Exception):
 class CannotDeleteSelfError(Exception):
     def __init__(self):
         super().__init__("You cannot delete your own user")
+        
+class UserInvalidUpdateError(Exception):
+    def __init__(self):
+        super().__init__("Invalid fields to update")

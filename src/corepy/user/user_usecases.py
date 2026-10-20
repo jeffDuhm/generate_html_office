@@ -11,6 +11,7 @@ from corepy.user.user_exceptions import (
     RepeatedEmailError,
     UserInUseError,
     UserNotFoundError,
+    UserInvalidUpdateError
 )
 from corepy.user.user_messages import SuccessUserMessages
 from corepy.user.user_queries import UserQueries
@@ -68,10 +69,13 @@ class UserUsecases:
             raise UserNotFoundError()
 
         updates = user_update.model_dump(exclude_unset=True)
+        
+        if not updates:
+            raise UserInvalidUpdateError()
 
         if "email" in updates:
             other_user = queries.get_by_email(updates["email"])
-            if other_user and other_user.id != user_id:
+            if other_user is not None and other_user.id != user_id:
                 raise RepeatedEmailError()
 
         if "password" in updates:
