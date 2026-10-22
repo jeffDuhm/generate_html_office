@@ -99,32 +99,6 @@ class UserUsecases:
             raise InvalidCredentialsError()
 
         return db_user
-
-    def ensure_first_admin(self) -> None:
-        queries = UserQueries(self.db)
-        if queries.exists_admin():
-            return
-
-        admin_email = os.environ.get("ADMIN_EMAIL")
-        admin_password = os.environ.get("ADMIN_PASSWORD")
-        if not admin_email or not admin_password:
-            self.logger.warning("No admin exists and ADMIN_EMAIL/ADMIN_PASSWORD are not set")
-            return
-
-        existing_user = queries.get_by_email(admin_email)
-        if existing_user:
-
-            queries.update(existing_user, {"is_admin": True, "is_active": True})
-            self.logger.info("Existing user promoted to admin")
-            return
-
-        queries.create(
-            email=admin_email,
-            name="Admin",
-            password_hash=Password.generate(admin_password),
-            is_admin=True,
-        )
-        self.logger.info("First admin created")
         
     def delete(self, user_id: int, current_user_id: int) -> ResponseSuccessSchema:
         if user_id == current_user_id:
