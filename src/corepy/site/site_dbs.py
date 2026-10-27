@@ -1,4 +1,5 @@
 from sqlalchemy import String, Column, func, Boolean, DateTime, Integer
+from sqlalchemy.orm import relationship
 from corepy.shared.mysql.base import Base
 
 class SitesDB(Base):
@@ -12,3 +13,5 @@ class SitesDB(Base):
         server_default=func.now(),
         nullable=False
     )
+    
+    widgets = relationship("WidgetsDB", back_populates="site")

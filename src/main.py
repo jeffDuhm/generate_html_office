@@ -5,6 +5,7 @@ from api.user.router import router as router_user
 from api.auth.router import router as router_auth
 from api.site.router import router as router_site
 from api.site.router import user_router as router_site_user
+from api.widget.router import router as router_widget
 
 load_dotenv()
 
@@ -16,6 +17,7 @@ def create_app() -> FastAPI:
     app.include_router(router_auth, prefix="/auth", tags=["auth"])
     app.include_router(router_site, prefix="/admin/sites", tags=["admin"])
     app.include_router(router_site_user, prefix="/sites", tags=["sites"])
+    app.include_router(router_widget, prefix="/admin/sites/{site_id}/widgets", tags=["admin"])
 
     return app
 
