@@ -158,7 +158,7 @@ class HTMLRenderer:
         
         text = text.lower().strip()
         
-        for match in self.rules["button_texts"]:
+        for match in self.rules["modal_matches"]:
             
             if text == match.lower().strip():
                 

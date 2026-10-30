@@ -3,7 +3,7 @@
   "widgets": [
     {
       "shortcode": "[widget_quick_quote]",
-      "texts": [
+      "matches": [
         "Quick Quote Widget",
         "Quote Widget",
         "<Quote Widget>",
@@ -12,20 +12,20 @@
     },
     {
       "shortcode": "[widget_type_of_coverage]",
-      "texts": [
+      "matches": [
         "Types of Coverage widget",
         "<Types of Coverage Widget>"
       ]
     },
     {
       "shortcode": "[widget_get_call_us]",
-      "texts": [
+      "matches": [
         "Quote Box Widget with Icons",
         "<Quote Box Widget with Icons>"
       ]
     }
   ],
-  "button_texts": [
+  "modal_matches": [
     "quote online",
     "start a quote online",
     "free quote online",
@@ -42,7 +42,7 @@
       "target_url": "https://freewayseguros.confiedevstg.com/"
     },
     {
-      "source_url": "https://www.freeway.com/es",
+      "source_url": "https://www.freeway.com/es/",
       "target_url": "https://freewayseguros.confiedevstg.com/"
     }
   ]

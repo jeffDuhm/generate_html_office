@@ -186,7 +186,7 @@ class WordReader:
         
         for widget in self.rules["widgets"]:
             
-            text_options = widget["texts"] + [widget["shortcode"]]
+            text_options = widget["matches"] + [widget["shortcode"]]
             
             for match in text_options:
             
