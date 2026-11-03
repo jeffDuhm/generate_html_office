@@ -2,6 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
+import corepy.shared.utils.models
 from corepy.shared.mysql.base import SessionLocal, Base, engine
 from corepy.shared.utils.password import Password
 from corepy.user.user_queries import UserQueries
@@ -25,6 +26,7 @@ def create_first_admin():
         
         if not admin_email or not admin_password:
             logger.warning("No admin exists and ADMIN_EMAIL/ADMIN_PASSWORD are not set")
+            return
         
         existing_user = queries.get_by_email(admin_email)
         

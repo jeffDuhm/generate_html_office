@@ -1,4 +1,5 @@
 from sqlalchemy import Boolean, Column, Integer, String, func, DateTime
+from sqlalchemy.orm import relationship
 from corepy.shared.mysql.base import Base
 
 class UsersDB(Base):
@@ -15,3 +16,5 @@ class UsersDB(Base):
         server_default=func.now(),
         nullable=False
     )
+    
+    widget_matches = relationship("WidgetMatchesDB", back_populates="user")

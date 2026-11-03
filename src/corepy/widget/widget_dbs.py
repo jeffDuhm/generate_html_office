@@ -17,3 +17,5 @@ class WidgetsDB(Base):
     )
     
     site = relationship("SitesDB", back_populates="widgets")
+    matches = relationship("WidgetMatchesDB", back_populates="widget")
+    
