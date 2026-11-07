@@ -3,35 +3,38 @@
     "widgets": [
         {
             "shortcode": "[quick_quote_widget]",
-            "texts": [
+            "matches": [
                 "Quick Quote Widget",
                 "Quote Widget",
                 "<Quote Widget>",
                 "[Quote widget]",
                 "<Quick Quote Widget>",
-                "[quick_quote_widget]"
+                "[quick_quote_widget]",
+                "Widget1"
             ]
         },
         {
             "shortcode": "[products_access_widget]",
-            "texts": [
+            "matches": [
                 "Types of Coverage widget",
                 "<Types of Coverage Widget>",
-                "[products_access_widget]"
+                "[products_access_widget]",
+                "Widget2"
             ]
         },
         {
             "shortcode": "[component_get_call_out]",
-            "texts": [
+            "matches": [
                 "Quote Box Widget with Icons",
                 "<Quote Box Widget with Icons>",
                 "<CTA Box>",
-                "[component_get_call_out]"
+                "[component_get_call_out]",
+                "Widget3"
             ]
         }
 
     ],
-    "button_texts": [],
+    "modal_matches": [],
     "url_replacements": [
     {
       "source_url": "https://www.acceptance.com/",

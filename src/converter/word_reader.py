@@ -151,16 +151,32 @@ class WordReader:
     
     def _extract_content(self, paragraph):
         content = []
+        items = list(paragraph.iter_inner_content())
 
-        for item in paragraph.iter_inner_content():
+        for index, item in enumerate(items):
             
             if isinstance(item, Run):
             
                 content.append(self._parse_run(item))
                 
             elif isinstance(item, Hyperlink):
-            
-                content.append(self._parse_hyperlink(item))
+
+                parsed = self._parse_hyperlink(item)
+
+                if parsed["text"].strip():
+                    content.append(parsed)
+                    continue
+
+                next_item = items[index + 1] if index + 1 < len(items) else None
+
+                if (
+                    isinstance(next_item, Hyperlink)
+                    and next_item.text.strip()
+                    and next_item.address == item.address
+                ):
+                    parsed["link"] = False
+
+                content.append(parsed)
         
         return content
     
