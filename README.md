@@ -11,14 +11,14 @@ Convierte documentos word (.docx) a html utilizando un archivo de configuración
 pip install -r requirements.txt
 ```
 
-## Uso
+## Uso CLI
 
 1. Coloca los archivos `.docx` dentro de la carpeta `input`.
 
 Ejecuta:
 
 ```bash
-python main.py --site nombre-site
+make cli SITE=freeway
 ```
 
 Sitios disponibles:
@@ -30,7 +30,7 @@ Sitios disponibles:
 Ejemplo:
 
 ```bash
-python main.py --site freeway
+make cli SITE=freeway
 ```
 
 > **Nota**: `freeway` soporta inglés y español.
@@ -42,7 +42,7 @@ python main.py --site freeway
 ### Freeway
 
 ```bash
-python main.py --site freeway
+make cli SITE=freeway
 ```
 
 Carga:
@@ -54,7 +54,7 @@ config/freeway.json
 ### Ino
 
 ```bash
-python main.py --site ino
+make cli SITE=ino
 ```
 Carga:
 
@@ -65,7 +65,7 @@ config/ino.json
 ### Acceptance
 
 ```bash
-python main.py --site acceptance
+make cli SITE=acceptance
 ```
 Carga:
 

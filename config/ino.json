@@ -3,7 +3,7 @@
     "widgets": [
         {
             "shortcode": "[widget_start_quote]",
-            "texts": [
+            "matches": [
                 "Quick Quote Widget",
                 "Quote Widget",
                 "<Quote Widget>",
@@ -13,21 +13,21 @@
         },
         {
             "shortcode": "[widget_quick_quote]",
-            "texts": [
+            "matches": [
                 "Types of Coverage widget",
                 "<Types of Coverage Widget>"
             ]
         },
         {
             "shortcode": "[widget_knowledge]",
-            "texts": [
+            "matches": [
                 "Quote Box Widget with Icons",
                 "<Quote Box Widget with Icons>"
             ]
         }
 
     ],
-    "button_texts": [],
+    "modal_matches": [],
     "url_replacements": [
     {
       "source_url": "https://www.insureone.com/",
