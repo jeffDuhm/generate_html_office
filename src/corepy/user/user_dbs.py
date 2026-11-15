@@ -18,3 +18,4 @@ class UsersDB(Base):
     )
     
     widget_matches = relationship("WidgetMatchesDB", back_populates="user")
+    modal_matches = relationship("ModalMatchesDB", back_populates="user")
