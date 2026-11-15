@@ -1,0 +1,41 @@
+{
+    "use_sections": true,
+    "widgets": [
+        {
+            "shortcode": "[widget_start_quote]",
+            "matches": [
+                "Quick Quote Widget",
+                "Quote Widget",
+                "<Quote Widget>",
+                "<Quick Quote Widget>",
+                "[Quote widget]",
+                "widget1"
+            ]
+        },
+        {
+            "shortcode": "[widget_quick_quote]",
+            "matches": [
+                "Types of Coverage widget",
+                "<Types of Coverage Widget>",
+                "widget2"
+            ]
+        },
+        {
+            "shortcode": "[widget_knowledge]",
+            "matches": [
+                "Quote Box Widget with Icons",
+                "<Quote Box Widget with Icons>",
+                "widget3"
+            ]
+        }
+
+    ],
+    "modal_matches": [],
+    "url_replacements": [
+    {
+      "source_url": "https://www.sanborns.com/",
+      "target_url": "https://sanborns.confiedevstg.com/"
+    }
+  ]
+}
+
