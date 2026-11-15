@@ -152,14 +152,25 @@ class WordReader:
     def _extract_content(self, paragraph):
         content = []
         items = list(paragraph.iter_inner_content())
+        previous_item_run = False
 
         for index, item in enumerate(items):
             
             if isinstance(item, Run):
-            
-                content.append(self._parse_run(item))
+                parsed = self._parse_run(item, paragraph)
+
+                if (
+                    previous_item_run
+                    and content[-1]["bold"] == parsed["bold"]
+                ):
+                    content[-1]["text"] += parsed["text"]
+                else:
+                    content.append(parsed)
+
+                previous_item_run = True
                 
             elif isinstance(item, Hyperlink):
+                previous_item_run = False
 
                 parsed = self._parse_hyperlink(item)
 
@@ -180,13 +191,28 @@ class WordReader:
         
         return content
     
-    def _parse_run(self, item):
+    def _parse_run(self, item, paragraph):
         
         return {
             "text": item.text,
-            "bold": bool(item.bold),
+            "bold": self._is_bold(item, paragraph),
             "link": False
         }
+
+    def _is_bold(self, run, paragraph):
+        if run.bold is not None:
+            return run.bold
+
+        for style in (run.style, paragraph.style):
+            while style is not None:
+                bold = style.font.bold
+
+                if bold is not None:
+                    return bold
+
+                style = style.base_style
+
+        return False
         
     def _parse_hyperlink(self, item):
         
