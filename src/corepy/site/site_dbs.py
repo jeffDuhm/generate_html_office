@@ -16,3 +16,4 @@ class SitesDB(Base):
     
     widgets = relationship("WidgetsDB", back_populates="site")
     modal_matches = relationship("ModalMatchesDB", back_populates="site")
+    url_replacements = relationship("UrlReplacementsDB", back_populates="site")
