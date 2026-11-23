@@ -9,6 +9,7 @@ from api.widget.router import router as router_widget
 from api.widget_match.router import router as router_widget_match
 from api.modal_match.router import router as router_modal_match
 from api.url_replacement.router import router as router_url_replacement
+from api.conversion_log.router import router as router_conversion_log
 
 load_dotenv()
 
@@ -24,6 +25,7 @@ def create_app() -> FastAPI:
     app.include_router(router_widget_match, tags=["widget-matches"])
     app.include_router(router_modal_match, tags=["modal-matches"])
     app.include_router(router_url_replacement, tags=["url-replacements"])
+    app.include_router(router_conversion_log, prefix="/admin/conversion-logs", tags=["admin"])
 
     return app
 

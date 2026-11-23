@@ -20,3 +20,4 @@ class UsersDB(Base):
     widget_matches = relationship("WidgetMatchesDB", back_populates="user")
     modal_matches = relationship("ModalMatchesDB", back_populates="user")
     url_replacements = relationship("UrlReplacementsDB", back_populates="user")
+    conversion_logs = relationship("ConversionLogsDB", back_populates="user")
