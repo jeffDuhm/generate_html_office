@@ -100,6 +100,7 @@ class ModalMatchUsecases:
             raise ModalMatchNotFoundError()
 
         deleted = queries.delete(db_match)
+        
         if not deleted:
             raise ModalMatchConflictError()
 

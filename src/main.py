@@ -8,6 +8,7 @@ from api.site.router import user_router as router_site_user
 from api.widget.router import router as router_widget
 from api.widget_match.router import router as router_widget_match
 from api.modal_match.router import router as router_modal_match
+from api.url_replacement.router import router as router_url_replacement
 
 load_dotenv()
 
@@ -22,6 +23,7 @@ def create_app() -> FastAPI:
     app.include_router(router_widget, prefix="/admin/sites/{site_id}/widgets", tags=["admin"])
     app.include_router(router_widget_match, tags=["widget-matches"])
     app.include_router(router_modal_match, tags=["modal-matches"])
+    app.include_router(router_url_replacement, tags=["url-replacements"])
 
     return app
 
