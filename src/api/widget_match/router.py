@@ -20,7 +20,7 @@ from corepy.widget_match.widget_match_usecases import WidgetMatchUsecases
 
 router = APIRouter()
 
-@router.get("/sites/{site_id}/config")
+@router.get("/sites/{site_id}/widget-matches")
 def get_all_by_site(
     site_id: int,
     db: Session = Depends(get_db),
