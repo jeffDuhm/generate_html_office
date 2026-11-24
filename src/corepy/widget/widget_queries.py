@@ -26,6 +26,18 @@ class WidgetQueries:
         db_widget = self.db.scalars(query).first()
         return db_widget
     
+    def get_active_by_site(self, site_id: int) -> list[WidgetsDB]:
+        query = (
+            select(WidgetsDB)
+            .where(
+                WidgetsDB.site_id == site_id,
+                WidgetsDB.is_active.is_(True),
+            )
+            .order_by(WidgetsDB.id)
+        )
+        db_widgets = self.db.scalars(query).all()
+        return db_widgets
+    
     def create(self, site_id: int, shortcode: str) -> WidgetsDB:
         
         db_widget = WidgetsDB(
